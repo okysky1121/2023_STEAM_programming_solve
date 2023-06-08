@@ -10,3 +10,23 @@ body {
   width: 100%;
   height: 100%;
 }
+
+#search {
+  width: 100%;
+  height: 4em;
+  top: 0;
+  position: fixed;
+  background-color: white;
+}
+
+#search input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding-left: 1em;
+  font-size: 18px;
+}
+
+#search input:focus {
+  outline: none;
+}
