@@ -1,7 +1,25 @@
 #!/usr/bin/env python
 
-import sys
+import sys, os
 from pandas import read_excel
+from elasticsearch import Elasticsearch
+from elasticsearch.helpers import parallel_bulk
+
+INDEX_NAME = "location"
+ELASTICSEARCH = os.environ["ELASTICSEARCH"]
+
+def generate_data(data):
+    for value in data.values:
+        yield {
+            "_index": INDEX_NAME,
+            "name": value[0],
+            "type": value[1],
+            "public": value[2],
+            "group": value[3],
+            "address": value[4],
+            "contact": value[5],
+            "homepage": value[6]
+        }
 
 data = read_excel(sys.argv[1],
                   sheet_name=2,
@@ -13,3 +31,11 @@ data = read_excel(sys.argv[1],
         .fillna("null")
 
 data.to_csv("fetch_data.csv", index=False)
+
+es = Elasticsearch(ELASTICSEARCH)
+
+es.options(ignore_status=[400, 404]).indices.delete(index=INDEX_NAME)
+
+for s, info in parallel_bulk(es, generate_data(data)):
+    if not s:
+        print(info)
