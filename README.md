@@ -21,7 +21,7 @@ ELASTICSEARCH=<URL> python script/preprocess.py PATH
 3. 명령어를 입력하여 실행 후 http://localhost:8000 으로 접속하여 확인합니다.
 
 ```bash
-uvicorn src.main:app
+ELASTICSEARCH=<URL> uvicorn src.main:app
 ```
 
 ## 프론트엔드(TypeScript + Vite)
