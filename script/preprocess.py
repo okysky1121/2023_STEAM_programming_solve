@@ -1,12 +1,32 @@
 #!/usr/bin/env python
 
-import sys, os, json
+import sys, os, json, requests, unicodedata
 from pandas import read_excel
+from tqdm import tqdm
+from geopy import Nominatim
+from bs4 import BeautifulSoup
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import parallel_bulk
 
 INDEX_NAME = "location"
 ELASTICSEARCH = os.environ["ELASTICSEARCH"]
+BASE_URL = "https://www.juso.go.kr/support/AddressMainSearch.do?searchKeyword="
+
+def geocode(addr):
+    try:
+        point = geolocator.geocode(addr, timeout=None)
+        return f"{point.latitude},{point.longitude}"
+    except:
+        pass
+
+def get_address(addr):
+    try:
+        res = requests.get(BASE_URL + addr)
+        html = BeautifulSoup(res.content, "html.parser")
+
+        return unicodedata.normalize("NFKD", html.select_one(".roadNameText").text)
+    except:
+        pass
 
 def generate_data(data):
     for value in data.values:
@@ -29,6 +49,11 @@ data = read_excel(sys.argv[1],
                   names=["name", "type", "public", "group", "address", "contact", "homepage"])\
         .apply(lambda x: x.str.strip())\
         .fillna("null")
+geolocator = Nominatim(user_agent="sleepy")
+
+tqdm.pandas()
+data["address"] = data["address"].progress_apply(get_address)
+# .progress_apply(geocode)
 
 data.to_csv("fetch_data.csv", index=False)
 
