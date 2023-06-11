@@ -38,3 +38,6 @@ yarn dev
 ```bash
 yarn build
 ```
+
+## 참고자료
+[Elastic 가이드북](https://esbook.kimjmin.net/)

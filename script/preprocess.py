@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys, os
+import sys, os, json
 from pandas import read_excel
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import parallel_bulk
@@ -34,7 +34,11 @@ data.to_csv("fetch_data.csv", index=False)
 
 es = Elasticsearch(ELASTICSEARCH)
 
+with open("es_mapping.json", encoding="utf8") as f:
+    mapping = json.load(f)
+
 es.options(ignore_status=[400, 404]).indices.delete(index=INDEX_NAME)
+es.indices.create(index=INDEX_NAME, mappings=mapping["mappings"])
 
 for s, info in parallel_bulk(es, generate_data(data)):
     if not s:

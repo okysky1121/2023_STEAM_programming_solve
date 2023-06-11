@@ -1,0 +1,29 @@
+{
+  "mappings": {
+    "properties": {
+      "type": {
+        "type": "text"
+      },
+      "name": {
+        "type": "text",
+        "analyzer": "nori"
+      },
+      "group": {
+        "type": "text"
+      },
+      "address": {
+        "type": "text",
+        "analyzer": "nori"
+      },
+      "public": {
+        "type": "text"
+      },
+      "contact": {
+        "type": "text"
+      },
+      "homepage": {
+        "type": "text"
+      }
+    }
+  }
+}
