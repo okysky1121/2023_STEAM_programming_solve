@@ -8,6 +8,8 @@ data = read_excel(sys.argv[1],
                   usecols=[6, 8, 9, 12, 13, 23 ,25],
                   header=None,
                   skiprows=10,
-                  names=["name", "type", "public", "group", "address", "contact", "homepage"])
+                  names=["name", "type", "public", "group", "address", "contact", "homepage"])\
+        .apply(lambda x: x.str.strip())\
+        .fillna("null")
 
 data.to_csv("fetch_data.csv", index=False)
