@@ -23,6 +23,9 @@
       },
       "homepage": {
         "type": "text"
+      },
+      "point": {
+        "type": "geo_point"
       }
     }
   }
