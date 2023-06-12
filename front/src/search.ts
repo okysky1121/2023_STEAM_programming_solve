@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
 
-export const fromSearchValue: () => Observable<string> = () => {
+export const fromSearchInput: () => Observable<string> = () => {
   const searchElement = <HTMLInputElement>(
     document.querySelector("#search input")
   );
