@@ -7,7 +7,7 @@ import { fromWatcher } from "./geo";
 import { fromSearchInput } from "./search";
 import "ol/ol.css";
 
-const runApp = () => {
+const runApp = async () => {
   const view = new View({ zoom: 16 });
   const map = new Map({
     target: "app",
@@ -30,6 +30,8 @@ const runApp = () => {
     view.setCenter(fromLonLat([longitude, latitude]));
   };
   const watchSearch = (value: string) => {};
+
+  await navigator.permissions.query({ name: "geolocation" });
 
   fromWatcher().subscribe(watchPosition);
   fromSearchInput().subscribe(watchSearch);
