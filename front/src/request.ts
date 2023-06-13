@@ -1,6 +1,17 @@
 import qs from "query-string";
 
-type Location = {};
+type Location = Record<
+  | "address"
+  | "contact"
+  | "group"
+  | "homepage"
+  | "name"
+  | "point"
+  | "public"
+  | "type",
+  string
+>;
+
 type LocationResponse = { result: Location[] };
 
 const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
