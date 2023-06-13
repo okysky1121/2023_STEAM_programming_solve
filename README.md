@@ -30,7 +30,7 @@ ELASTICSEARCH=<URL> uvicorn src.main:app
 .env 파일을 아래의 형식에 맞춰 생성합니다.
 
 ```bash
-API_URL=<URL>
+VITE_API_URL=<URL>
 ```
 
 ### 개발 서버 실행
