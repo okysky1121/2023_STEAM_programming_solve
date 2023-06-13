@@ -10,12 +10,11 @@ elasticsearch-plugin install analysis-nori
 ## 백엔드(Python + Elasticsearch)
 
 1. [여성가족부 누리집](http://www.mogef.go.kr/mp/pcd/mp_pcd_s001d.do?mid=plc502&bbtSn=704821)에서 .xlsx 파일을 다운로드합니다.
-2. [전처리 스크립트](script/preprocess.py)를 실행합니다.
+2. 전처리 스크립트를 실행합니다.
 
 ```bash
-ELASTICSEARCH=<URL> ./script/preprocess.py PATH
-# 또는
-ELASTICSEARCH=<URL> python script/preprocess.py PATH
+./script/fetch.py PATH
+ELASTICSEARCH=<URL> ./script/index.py
 ```
 
 3. 명령어를 입력하여 실행 후 http://localhost:8000 으로 접속하여 확인합니다.
@@ -25,6 +24,14 @@ ELASTICSEARCH=<URL> uvicorn src.main:app
 ```
 
 ## 프론트엔드(TypeScript + Vite)
+
+### env 설정
+
+.env 파일을 아래의 형식에 맞춰 생성합니다.
+
+```bash
+API_URL=<URL>
+```
 
 ### 개발 서버 실행
 
