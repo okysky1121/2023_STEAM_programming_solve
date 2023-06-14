@@ -1,6 +1,6 @@
 import qs from "query-string";
 
-type Location = Record<
+export type Location = Record<
   | "address"
   | "contact"
   | "group"
