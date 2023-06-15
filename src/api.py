@@ -37,12 +37,9 @@ def search(q: str):
 @router.get("/nearby")
 def nearby(lat: float, lon: float):
     query = {
-        "size": 100,
-        "query": {
-            "geo_distance": {
-                "distance": "5km",
-                "point": f"{lat, lon}"
-            }
+        "geo_distance": {
+            "distance": "5km",
+            "point": f"{lat},{lon}"
         }
     }
 
