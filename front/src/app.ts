@@ -3,11 +3,19 @@ import { defaults } from "ol/control";
 import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
 import { fromLonLat } from "ol/proj";
-import { fromWatcher } from "./geo";
+import { fromWatcher, getCurrentPosition } from "./geo";
 import { fromSearchInput } from "./search";
-import { requestSearch } from "./request";
+import { Location, requestNearby, requestSearch } from "./request";
 import { showList } from "./list";
+import { createMarker } from "./marker";
 import "ol/ol.css";
+
+const getMarkers = async (locs: Location[]) => {
+  return locs.map(({ point }) => {
+    console.log(point);
+    return createMarker(<[number, number]>point.split(",").map(parseFloat));
+  });
+};
 
 const runApp = async () => {
   const view = new View({ zoom: 16 });
@@ -26,12 +34,18 @@ const runApp = async () => {
 
   let timeout = -1;
 
-  const watchPosition = (value: GeolocationPosition) => {
+  const watchPosition = async (value: GeolocationPosition) => {
     const {
       coords: { longitude, latitude },
     } = value;
 
-    view.setCenter(fromLonLat([longitude, latitude]));
+    const center = fromLonLat([longitude, latitude]);
+    view.setCenter(center);
+
+    const layers = await getMarkers(await requestNearby(latitude, longitude));
+    for (let layer of layers) {
+      map.addLayer(layer);
+    }
   };
   const watchSearch = (value: string) => {
     clearTimeout(timeout);
@@ -42,6 +56,7 @@ const runApp = async () => {
   };
 
   await navigator.permissions.query({ name: "geolocation" });
+  watchPosition(await getCurrentPosition());
 
   fromWatcher().subscribe(watchPosition);
   fromSearchInput().subscribe(watchSearch);
