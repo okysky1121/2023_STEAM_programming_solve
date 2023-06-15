@@ -15,8 +15,8 @@ export const createListItem = (loc: Location) => {
   address.textContent = loc.address;
 
   item.replaceChildren(name, address);
-
   return item;
 };
 
-export const showList = (locs: Location[]) => list.replaceChildren(...locs.map(createListItem));
+export const showList = (locs: Location[]) =>
+  list.replaceChildren(...locs.map(createListItem));
