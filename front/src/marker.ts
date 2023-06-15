@@ -6,14 +6,16 @@ import Style from "ol/style/Style";
 import { Vector as SVector } from "ol/source";
 import { Vector as LVector } from "ol/layer";
 
+const GlobalStyle = new Style({
+  image: new Icon({
+    src: "",
+  })
+})
+
 export const createMarker = ([lat, lon]: [number, number]) => {
   const feature = new Feature({
     geometry: new Point(fromLonLat([lon, lat])),
-    style: new Style({
-      image: new Icon({
-        src: "",
-      }),
-    }),
+    style: GlobalStyle,
   });
 
   return new LVector({
