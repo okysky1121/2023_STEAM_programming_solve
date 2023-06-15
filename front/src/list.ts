@@ -2,8 +2,6 @@ import { Location } from "./request";
 
 const list = document.getElementById("list")!;
 
-export const toggleList = () => list.classList.toggle("hide");
-
 export const createListItem = (loc: Location) => {
   const item = document.createElement("div");
   item.classList.add("item");

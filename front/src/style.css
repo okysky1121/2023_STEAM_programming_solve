@@ -35,15 +35,15 @@ body {
   width: 100%;
   top: 4em;
   position: fixed;
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 8px;
   cursor: pointer;
   background-color: white;
 }
 
-#list.hide {
-  display: none;
+#search:has(input:focus) ~ #list {
+  display: flex;
 }
 
 #list .item {
