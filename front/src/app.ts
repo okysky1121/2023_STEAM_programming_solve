@@ -12,7 +12,6 @@ import "ol/ol.css";
 
 const getMarkers = async (locs: Location[]) => {
   return locs.map(({ point }) => {
-    console.log(point);
     return createMarker(<[number, number]>point.split(",").map(parseFloat));
   });
 };

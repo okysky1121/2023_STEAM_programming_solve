@@ -13,7 +13,7 @@ const GlobalStyle = new Style({
     anchorXUnits: "fraction",
     anchorYUnits: "pixels",
     src: marker,
-    scale: 0.5,
+    scale: 0.3,
   }),
 });
 
