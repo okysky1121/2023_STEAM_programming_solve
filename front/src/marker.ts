@@ -1,26 +1,31 @@
 import { Feature } from "ol";
 import { Point } from "ol/geom";
 import { fromLonLat } from "ol/proj";
-import Icon from "ol/style/Icon";
 import Style from "ol/style/Style";
-import { Vector as SVector } from "ol/source";
-import { Vector as LVector } from "ol/layer";
+import Icon from "ol/style/Icon";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
+import marker from "./assets/marker.svg";
 
 const GlobalStyle = new Style({
   image: new Icon({
-    src: "",
-  })
-})
+    anchor: [0.5, 24],
+    anchorXUnits: "fraction",
+    anchorYUnits: "pixels",
+    src: marker,
+    scale: 0.5,
+  }),
+});
 
 export const createMarker = ([lat, lon]: [number, number]) => {
   const feature = new Feature({
     geometry: new Point(fromLonLat([lon, lat])),
-    style: GlobalStyle,
   });
 
-  return new LVector({
+  return new VectorLayer({
     visible: true,
-    source: new SVector({
+    style: GlobalStyle,
+    source: new VectorSource({
       features: [feature],
     }),
   });
